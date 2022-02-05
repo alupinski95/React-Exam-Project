@@ -19,9 +19,7 @@ $color-red: red;
 
 .AppHeader {
   background-color: #282c34;
-  height: calc(100vh - 100px);
-  display: flex;
-  flex-direction: column;
+  display: block;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
