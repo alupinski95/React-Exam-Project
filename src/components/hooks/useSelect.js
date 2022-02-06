@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useSelect = (initialValue,afterBindCallback) => {
+export const useSelect = (initialValue, afterBindCallback) => {
   const [value, setValue] = useState(initialValue);
 
   return {
@@ -11,9 +11,8 @@ export const useSelect = (initialValue,afterBindCallback) => {
       value,
       onChange: event => {
         setValue(event.currentTarget.value);
-        if(afterBindCallback)afterBindCallback();
-      },
-      defaultValue:initialValue
+        if (afterBindCallback) afterBindCallback();
+      }
     }
   };
 };

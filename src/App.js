@@ -3,65 +3,71 @@ import ShopingList from './components/ShopingList/ShopingList';
 import AddProducts from './components/AddProducts/AddProducts';
 import ProductsFilters from './components/ProductsFilters/ProductsFilters';
 import styles from './App.module.scss';
-import produkty  from '../src/common/consts/produkty';
-import { useEffect, useState } from 'react';
+import produkty from '../src/common/consts/produkty';
+import { useState } from 'react';
 
 function App() {
   const [productList, setProductList] = useState(produkty);
   const [filterProductList, setFilterProductList] = useState(productList);
   const [shoppingList, setShoppingList] = useState([]);
-  
 
+  // const categories = productList.map(element => {
+  //   if (!categoryHelper.find(elem => elem === element.category))
+  //     categoryHelper.push(element.category);
+  // });
 
-  const prepatreCategoryList = () =>{
-    let categoryHelper = [];
-    categoryHelper["All"] = "All";
-    productList.forEach(element => {
-      if(!categoryHelper[element.category])
-       categoryHelper[element.category] = element.category;
-    });
-    debugger
-    return categoryHelper;
- }
- const [categoryList, setCategoryList] = useState(prepatreCategoryList());
+  // const prepatreCategoryList = () => {
+
+  //   let categoryHelper = [];
+  //   categoryHelper.push("All")
+  //   productList.forEach(element => {
+  //     if (!categoryHelper.find(elem => elem === element.category))
+  //       categoryHelper.push(element.category);
+  //   });
+  //   return categoryHelper;
+  // }
+  const [categoryList, setCategoryList] = useState(categories);
 
 
 
   const handleAddNewProduct = (product) => {
-    if(!categoryList[product.category])
-      setCategoryList(...categoryList,product.category);
-    setProductList([...productList,product]);
+    if (!categoryList.find(elem => elem === product.category))
+      setCategoryList(...categoryList, product.category);
+    debugger
+    setProductList([...productList, product]);
+    // setFilterProductList([...filterProductList, product]);
   }
 
   const handleAddProductToShoppingList = (product) => {
     product.isElementBuy = false;
-    setShoppingList([...shoppingList,product]);
+    setShoppingList([...shoppingList, product]);
   }
 
-  const removeFromShoppingList = (index) =>{
+  const removeFromShoppingList = (index) => {
     if (index > -1) {
-      shoppingList.splice(index,1);
+      shoppingList.splice(index, 1);
       setShoppingList([...shoppingList]);
     }
   }
 
-  const handleFilter = (filterElement) =>{
-    setFilterProductList(productList.filter(element => {
-      return element.productName.toLowerCase().includes(filterElement.searchedProductText.toLowerCase())
+  const handleFilter = (filterElement) => {
+    let filterList = productList.filter(element => {
+      return element.productName.toLowerCase().includes(filterElement.productName.toString().toLowerCase())
         && filterElement.category !== "All" ? element.category === filterElement.category : true
-        && filterElement.isFoodTypeFilter? element.isFoodType : true
-    }));
+          && filterElement.isFoodTypeFilter ? element.isFoodType : true
+    });
+    return filterList;
   }
 
 
   return (
     <div className={styles.appWrapper}>
-        <AddProducts handleAddNewProduct={handleAddNewProduct}/>
-        <ProductsFilters handleFilter={handleFilter} categoryList={categoryList}/>
-        <div className={styles.columnsWrapper}>
-          <ProductsList productList={filterProductList} handleAddProductToShoppingList={handleAddProductToShoppingList}/>
-          <ShopingList shoppingList={shoppingList} removeFromShoppingList={removeFromShoppingList}/>
-        </div>
+      <AddProducts handleAddNewProduct={handleAddNewProduct} />
+      <ProductsFilters handleFilter={handleFilter} categoryList={categoryList} />
+      <div className={styles.columnsWrapper}>
+        <ProductsList productList={handleFilter({ productName: "", category: "All", isFoodType: false })} handleAddProductToShoppingList={handleAddProductToShoppingList} />
+        <ShopingList shoppingList={shoppingList} removeFromShoppingList={removeFromShoppingList} />
+      </div>
     </ div>
   );
 }
