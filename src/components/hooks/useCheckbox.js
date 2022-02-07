@@ -12,7 +12,6 @@ export const useCheckbox = (initialValue, afterBindCallback) => {
       onChange: event => {
         const boolValue = event.currentTarget.checked;
         setValue(boolValue);
-        debugger
         if (afterBindCallback) afterBindCallback(boolValue);
       }
     }

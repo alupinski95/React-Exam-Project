@@ -30,7 +30,11 @@ function App() {
   }, [productList])
 
 
-
+  const setIsElementBuy = (index, value) => {
+    shoppingList[index].isElementBuy = value;
+    debugger
+    setShoppingList([...shoppingList]);
+  }
 
 
   const handleAddNewProduct = (product) => {
@@ -50,7 +54,6 @@ function App() {
   }
 
   const handleFilter = () => {
-    debugger
     let filterList = productList.filter(element => {
       return element.productName.toLowerCase().includes(productNameFilter.toString().toLowerCase())
         && (categoryFilter !== "All" ? element.category === categoryFilter : true)
@@ -73,6 +76,7 @@ function App() {
       <div className={styles.columnsWrapper}>
         <ProductsList productList={filterProductList} handleAddProductToShoppingList={handleAddProductToShoppingList} />
         <ShopingList shoppingList={shoppingList}
+          setIsElementBuy={setIsElementBuy}
           removeFromShoppingList={removeFromShoppingList} />
       </div>
     </ div>
