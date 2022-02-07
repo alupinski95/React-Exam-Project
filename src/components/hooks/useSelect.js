@@ -11,7 +11,7 @@ export const useSelect = (initialValue, afterBindCallback) => {
       value,
       onChange: event => {
         setValue(event.currentTarget.value);
-        if (afterBindCallback) afterBindCallback();
+        if (afterBindCallback) afterBindCallback(event.target.value);
       }
     }
   };

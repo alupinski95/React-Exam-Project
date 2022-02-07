@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
 import styles from '../../common/styles/Headers.module.scss';
 import { useInput } from '../hooks/useInput';
 import { useCheckbox } from '../hooks/useCheckbox';
@@ -7,9 +6,9 @@ import { useSelect } from '../hooks/useSelect';
 
 
 function ProductsFilters(props) {
-    const { value: productNameFilter, bind: bindProductNameFilter, reset: resetProductNameFilter } = useInput('');
-    const { value: categoryFilter, bind: bindCategoryFilter, reset: resetCategoryFilter } = useSelect(props.categoryList[0]);
-    const { value: isFoodTypeFilter, bind: bindIsFoodTypeFilter, reset: resetIsFoodTypeFilter } = useCheckbox(false);
+    const { value: productNameFilter, bind: bindProductNameFilter, reset: resetProductNameFilter } = useInput('', props.setProductNameFilter);
+    const { value: categoryFilter, bind: bindCategoryFilter, reset: resetCategoryFilter } = useSelect(props.categoryList[0], props.setCategoryFilter);
+    const { value: isFoodTypeFilter, bind: bindIsFoodTypeFilter, reset: resetIsFoodTypeFilter } = useCheckbox(false, props.setIsFoodTypeFilter);
 
     const resetFilters = () => {
         resetCategoryFilter();
@@ -17,19 +16,8 @@ function ProductsFilters(props) {
         resetIsFoodTypeFilter();
     }
 
-    const filterList = () => {
-        let filterFields = {
-            productName: productNameFilter,
-            category: categoryFilter,
-            isFoodTypeFilter: isFoodTypeFilter
-        }
-        props.handleFilter(filterFields);
-    }
 
-    // useEffect(() => {
-    //     filterList();
-    // }, [productNameFilter, categoryFilter, isFoodTypeFilter]);
-    debugger
+
     const elementsOfDropdown = props.categoryList.map(
         element =>
             <option value={element} key={element}>
