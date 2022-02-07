@@ -32,7 +32,6 @@ function App() {
 
   const setIsElementBuy = (index, value) => {
     shoppingList[index].isElementBuy = value;
-    debugger
     setShoppingList([...shoppingList]);
   }
 
