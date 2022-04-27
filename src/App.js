@@ -38,6 +38,7 @@ function App() {
 
   const handleAddNewProduct = (product) => {
     setProductList([...productList, product]);
+    setFilterProductList([...filterProductList, product]);
   }
 
   const handleAddProductToShoppingList = (product) => {
